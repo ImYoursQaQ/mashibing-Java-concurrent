@@ -23,6 +23,7 @@ public class T {
     public void m2() {
         try {
             TimeUnit.SECONDS.sleep(5);
+            System.out.println(Thread.currentThread().getName()+" m2 running");
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -30,7 +31,7 @@ public class T {
 
     public static void main(String[] args) {
         T t = new T();
-        new Thread(t::m1);
-        new Thread(t::m2);
+        new Thread(t::m1).start();
+        new Thread(t::m2).start();
     }
 }
