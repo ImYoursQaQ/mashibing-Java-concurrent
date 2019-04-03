@@ -12,10 +12,12 @@ public class T01_ConcurrentMap {
 
     public static void main(String[] args) {
 
-        //Map<String, String> map = new HashMap<>(); 
-        //Map<String, String> map = new Hashtable<>(); // 423  每次加锁，都锁一个对象
-        //Map<String, String> map = new ConcurrentHashMap<>(); // 309，加的是分段所，将容器分为16段，每段都有一个锁 segment; 1.8以后 使用 Node + synchronized+CAS
-        Map<String, String> map = new ConcurrentSkipListMap<>(); // 317  并发且排序，插入效率较低，但是读取很快
+
+        //Map<String, String> map = new HashMap<>(); 出现并发问题
+        //Map<String, String> map = new Hashtable<>(); // 511  每次加锁，都锁一个对象
+        //Map<String, String> map = Collections.synchronizedMap(new HashMap<>());//542
+        Map<String, String> map = new ConcurrentHashMap<>(); // 449，加的是分段所，将容器分为16段，每段都有一个锁 segment; 1.8以后 使用 Node + synchronized+CAS
+        //Map<String, String> map = new ConcurrentSkipListMap<>(); // 618  高并发且排序，插入效率较低，但是读取很快
     
         Random r = new Random();
         Thread[] ths = new Thread[100];
@@ -26,7 +28,7 @@ public class T01_ConcurrentMap {
         for (int i = 0; i < ths.length; i++) {
             ths[i] = new Thread(() -> {
                 for (int j = 0; j < 10000; j++) {
-                    map.put("a" + r.nextInt(10000), "a" + r.nextInt(100000));
+                    map.put("a" + j, "a" + r.nextInt(100000));
                 }
                 latch.countDown();
             }, "t" + i);
@@ -41,7 +43,7 @@ public class T01_ConcurrentMap {
 
         long end = System.currentTimeMillis();
         System.out.println(end - start);
-        System.out.println(map.size());
+        System.out.println(map.size()); //10000，为什么？如果选择 hashmap，size > 10000 为什么？
     }
     
 }

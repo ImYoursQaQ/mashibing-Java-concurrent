@@ -23,9 +23,9 @@ Map/Set:
         Queue：
             ConcurrentLinkedQueue 非阻塞同步队列
             BlockQueue
-                LinkedBlockingQueue
-                ArrayBlockingQueue 
-                TransferQueue
-                SynchronousQueue
-            DelayQueue
+                LinkedBlockingQueue 无界队列
+                ArrayBlockingQueue  有界队列
+                TransferQueue       传输队列（有容量）
+                SynchronousQueue    特殊的传输队列（容量为0）
+            DelayQueue      定时队列
 

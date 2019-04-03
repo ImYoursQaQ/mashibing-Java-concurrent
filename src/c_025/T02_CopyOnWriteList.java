@@ -18,8 +18,8 @@ public class T02_CopyOnWriteList {
 
         List<String> list =
                 //new ArrayList<>();
-                new Vector<>(); 
-                //new CopyOnWriteArrayList<>();  // 写速极慢，读取快
+                //new Vector<>();
+                new CopyOnWriteArrayList<>();  // 写速极慢，读取快
 
         Random r = new Random();
         Thread[] ths = new Thread[100];

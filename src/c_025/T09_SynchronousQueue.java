@@ -10,7 +10,7 @@ import java.util.concurrent.TransferQueue;
  * 一种特殊的TransferQueue，容量为0
  * 
  * TransferQueue是有容量的，可以通过add/put等方法向队列中加入元素
- * 但是SynchronousQueue是灭有
+ * 但是SynchronousQueue是没有
  */
 public class T09_SynchronousQueue {
 

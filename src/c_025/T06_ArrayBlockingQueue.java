@@ -20,9 +20,9 @@ public class T06_ArrayBlockingQueue {
             queue.put("a" + i);
         }
 
-        //queue.put("a11"); // 会阻塞
-        //queue.add("a11"); // 会抛出异常
-        //System.out.println(queue.offer("a11")); // 会返回false
+        //queue.put("a11"); // 满了会阻塞
+        //queue.add("a11"); // 满了会抛出异常
+        //System.out.println(queue.offer("a11")); // 满了会返回false
         System.out.println(queue.offer("a11", 1, TimeUnit.SECONDS)); // 会等待1s,返回false, 如果1s内有空闲,则添加成功后返回true
 
     }
