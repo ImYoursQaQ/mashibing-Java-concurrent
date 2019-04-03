@@ -4,7 +4,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
- * 证明AtomicXX类比synchronized更高效
+ *
+ * 证明原子类的读写都是原子性的操作，保证了可见性
  */
 public class T {
 

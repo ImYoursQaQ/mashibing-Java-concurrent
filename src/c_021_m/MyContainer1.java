@@ -1,6 +1,7 @@
 package c_021_m;
 
 import java.util.LinkedList;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 经典面试题：写一个固定容量的容器，拥有put和get方法，以及getCount方法
@@ -49,6 +50,32 @@ public class MyContainer1<T> {
         count--;
         this.notifyAll(); // 通知生产者线程生产
         return t;
+    }
+
+    public static void main(String[] args) {
+        MyContainer1<String> c = new MyContainer1<>();
+        // 启动消费者线程
+        for (int i = 0; i < 10; i++) {
+            new Thread(() -> {
+                for (int j = 0; j < 5; j++) {
+                    System.out.println("c "+c.get());
+                }
+            }, "c_" + i ).start();
+        }
+
+        try {
+            TimeUnit.SECONDS.sleep(1);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        for (int i = 0; i < 2; i++) {
+            new Thread(()->{
+                for (int j = 0; j < 25; j++) {
+                    c.put(Thread.currentThread().getName() + " " + j);
+                }
+            }, "p_" + i).start();
+        }
     }
 }
 

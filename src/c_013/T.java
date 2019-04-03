@@ -30,7 +30,8 @@ public class T {
         }
         
         // 启动这10个线程
-        threads.forEach(Thread::start);
+       // threads.forEach(Thread::start);
+        threads.forEach((o)->o.start());
         
         // join 到主线程，防止主线程先行结束
         for (Thread thread : threads) {

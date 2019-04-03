@@ -27,9 +27,16 @@ public class TicketSeller3 {
     public static void main(String[] args) {
         for (int i = 0; i < 10; i++) {
             new Thread(() -> {
-                while (tickets.size() > 0) {
-                    // sychronized 保证了原子性
+                while (true) {
+
                     synchronized (tickets) {
+                        if (tickets.size() <= 0)
+                            break;
+                        try {
+                            TimeUnit.MILLISECONDS.sleep(10);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                         System.out.println("销售了：" + tickets.remove(0));
                     }
                 }

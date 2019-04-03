@@ -26,4 +26,9 @@ public class T {
         }
         System.out.println(" m2"); // 这句话会打印，调用m2时，不会发生死锁
     }
+
+    public static void main(String[] args) {
+        T t = new T();
+        new Thread(t::m1).start();
+    }
 }

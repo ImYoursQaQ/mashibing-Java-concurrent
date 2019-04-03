@@ -38,7 +38,12 @@ public class ReentrantLock3 {
         } else {
             System.out.println(" m2 没拿到锁");
         }
-        lock.unlock();
+
+            try {
+                lock.unlock();
+            } catch (Exception e) {
+               // e.printStackTrace();
+            }
     }
 
     public static void main(String[] args) {

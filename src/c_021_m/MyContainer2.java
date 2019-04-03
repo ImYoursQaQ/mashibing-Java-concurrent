@@ -33,10 +33,10 @@ public class MyContainer2<T> {
     private Condition consumer = lock.newCondition();
 
 
-    public synchronized void put(T t) {
-        lock.lock();
+    public void put(T t) {
         try {
-            while (MAX == count) {
+            lock.lock();
+            while (list.size() == MAX) {
                 producer.await();
             }
             list.add(t);
@@ -49,20 +49,22 @@ public class MyContainer2<T> {
         }
     }
 
-    public synchronized T get() {
-        lock.lock();
+    public T get() {
+        T t = null;
         try {
+            lock.lock();
             while (list.size() == 0) {
                 consumer.await();
             }
+            t = list.removeFirst();
+            count--;
+            producer.signalAll();
+
         } catch (InterruptedException e) {
             e.printStackTrace();
         } finally {
             lock.unlock();
         }
-        T t = list.removeFirst();
-        count--;
-        producer.signalAll();
         return t;
     }
 
@@ -74,7 +76,7 @@ public class MyContainer2<T> {
                 for (int j = 0; j < 5; j++) {
                     System.out.println(c.get());
                 }
-            }, "c_" + i ).start();
+            }, "c_" + i).start();
         }
 
         try {
@@ -84,8 +86,8 @@ public class MyContainer2<T> {
         }
 
         for (int i = 0; i < 2; i++) {
-            new Thread(()->{
-                for (int j = 0; j < 2; j++) {
+            new Thread(() -> {
+                for (int j = 0; j < 25; j++) {
                     c.put(Thread.currentThread().getName() + " " + j);
                 }
             }, "p_" + i).start();

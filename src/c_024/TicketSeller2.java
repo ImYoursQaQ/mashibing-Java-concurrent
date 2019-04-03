@@ -30,7 +30,7 @@ public class TicketSeller2 {
                 while (tickets.size() > 0) {
                     // 将问题方法，睡1s
                     try {
-                        TimeUnit.SECONDS.sleep(1);
+                        TimeUnit.MILLISECONDS.sleep(10);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }

@@ -16,7 +16,7 @@ public class TicketSeller1 {
     static List<String> tickets = new ArrayList<>();
     
     static {
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 10000; i++) {
             tickets.add("票-" + i);
         }
     }

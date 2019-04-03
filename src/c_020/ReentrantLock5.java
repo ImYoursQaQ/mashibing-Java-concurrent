@@ -28,8 +28,9 @@ public class ReentrantLock5 extends Thread {
     }
 
     public static void main(String[] args) {
-        ReentrantLock5 t1 = new ReentrantLock5();
-        ReentrantLock5 t2 = new ReentrantLock5();
+        ReentrantLock5 r1 = new ReentrantLock5();
+        Thread t1 = new Thread(r1);
+        Thread t2 = new Thread(r1);
         t1.start();
         t2.start();
     }
