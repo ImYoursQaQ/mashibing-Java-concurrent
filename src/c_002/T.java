@@ -5,6 +5,7 @@ package c_002;
  * 对this加锁
  * 
  * 每次使用锁都要newObject，比较麻烦，可以使用this代替object锁
+ * synchronized锁定的是对象，对象的mark word字段
  */
 public class T {
 

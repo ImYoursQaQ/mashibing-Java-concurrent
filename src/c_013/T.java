@@ -11,13 +11,15 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class T {
 
-    volatile int count = 0;
-    /*AtomicInteger count = new AtomicInteger(0);*/
+    //volatile int count = 0;
+    AtomicInteger count = new AtomicInteger(0);
     
     /*synchronized*/ void m() {
         for (int i = 0; i < 10000; i++) {
-            count++;
-            /*count.incrementAndGet();*/
+            //count++;
+            if(count.get() < 10000){
+                count.incrementAndGet();
+            }
         }
     }
 

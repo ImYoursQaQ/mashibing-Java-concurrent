@@ -5,6 +5,7 @@ compile-version: 1.8 以上
 
 马士兵老师java多线程高并发编程 视频源码
 B站地址：https://www.bilibili.com/video/av33688545/
+https://www.bilibili.com/video/BV1gW411X7nQ
 
 源码包：mashibing/src
 
@@ -20,3 +21,6 @@ B站地址：https://www.bilibili.com/video/av33688545/
 视频P7: c_24
 视频p7~p10：c_25 并发集合
 视频p12~p17: c_26 线程池
+
+
+//新的顺序

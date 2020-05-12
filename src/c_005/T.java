@@ -31,6 +31,7 @@ Thread-2 count = 7
 Thread-1 count = 7
 
 线程重入的问题（线程执行过程中，被其他线程打断），因为 count-- + sout(count) 不是原子操作
+当线程0执行到打印语句时，线程1，2已经执行，将count修改，导致线程0的打印出错。
 
 解决办法，保证操作原子性，加上 synchronized 关键字
 

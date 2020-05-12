@@ -14,5 +14,13 @@ public class T {
         count--;
         System.out.println(Thread.currentThread().getName() + " count = " + count);
     }
+
+    //等同于m()
+    public static void m1(){
+        synchronized (T.class){
+            System.out.println("执行此方法！");
+        }
+
+    }
     
 }

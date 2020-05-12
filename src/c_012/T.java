@@ -27,12 +27,12 @@ public class T {
         System.out.println(" m start ");
         while (running) { // 直到主线程将running设置为false，T线程才会退出
             // 在while中加入一些语句，可见性问题可能就会消失，这是因为加入语句后，CPU可能就会出现空闲，然后就会同步主内存中的内容到工作内存
-            // 所以，可见性问题可能会消失
-            /*try {
-                TimeUnit.MILLISECONDS.sleep(10);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }*/
+            // 所以，可见性问题可能会消失,相当于手动触发了主内存到工作内存的拷贝
+//            try {
+//                TimeUnit.MILLISECONDS.sleep(10);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
         }
         System.out.println(" m end ");
     }
