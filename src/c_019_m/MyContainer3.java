@@ -38,6 +38,7 @@ public class MyContainer3 {
                     }
                 }
                 System.out.println("监测到容器长度为5，线程2立即退出");
+                //t2执行结束，通知t1继续运行，
                 lock.notify();
             }
         }, "t2").start();
@@ -57,7 +58,7 @@ public class MyContainer3 {
                     // 当长度为5时，通知 t2 进行退出
                     if (container.size() == 5) {
                         lock.notify(); // notify 不会释放锁，即便通知t2，t2也获取不到锁
-                        // 可以在wait一下，将锁释放，再让t2通知t1继续执行
+                        // 可以在wait一下，将锁释放，这时t2获取到锁才可以执行
                         try {
                             lock.wait();
                         } catch (InterruptedException e) {

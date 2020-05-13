@@ -30,7 +30,7 @@ public class MyContainer5 {
         // Count down 往下数  Latch 门闩
         // 门闩不能保证可见性，不是一种同步方式，只是一种线程通信方式，保证不了可见性
         // 门闩的等待，不会持有任何锁
-        CountDownLatch latch = new CountDownLatch(1);
+        CountDownLatch latch = new CountDownLatch(5);
 
         new Thread(() -> {
             System.out.println("t2 启动");
@@ -58,9 +58,7 @@ public class MyContainer5 {
                 container.add(new Object());
                 System.out.println("add " + i);
                 // 当长度为5时，撤掉一个门闩，此时门闩为0，门会打开，即t2会执行
-                if (container.size() == 5) {
-                    latch.countDown();
-                }
+                latch.countDown();
                 try {
                     TimeUnit.SECONDS.sleep(1);
                 } catch (InterruptedException e) {
