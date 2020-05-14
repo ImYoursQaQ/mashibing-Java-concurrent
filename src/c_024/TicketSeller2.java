@@ -45,4 +45,5 @@ public class TicketSeller2 {
 /*
 
 依然不能解决问题，判断和操作依然是复合操作，不是原子操作
+tickets.size() 和 tickets.remove()操作合在一起不是原子性的，有可能被打断。
  */

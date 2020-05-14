@@ -10,6 +10,7 @@ import java.util.concurrent.CountDownLatch;
  * 当发生写操作(添加、删除、修改)时，容器就会复制原有容器一份然后对新操作进行写操作，然后再将引用转向新的容器
  * 好处：保证读操作不需要锁也能正常访问，是一种读写分离的实现方式
  * 缺点：写的效率极低，特定场景下才会使用到
+ * 实际当中：事件监听器队列
  */
 public class T02_CopyOnWriteList {
 
@@ -17,9 +18,10 @@ public class T02_CopyOnWriteList {
     public static void main(String[] args) {
 
         List<String> list =
-                //new ArrayList<>();
-                //new Vector<>();
-                new CopyOnWriteArrayList<>();  // 写速极慢，读取快
+                //new ArrayList<>();//42，99609出现并发问题
+                //new Vector<>();//54
+                //new CopyOnWriteArrayList<>();  // 写速极慢！！！读取快 3100
+                Collections.synchronizedList(new ArrayList<>()); //45
 
         Random r = new Random();
         Thread[] ths = new Thread[100];

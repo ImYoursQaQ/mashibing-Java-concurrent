@@ -15,15 +15,16 @@ public class T04_ConcurrentQueue {
 
         for (int i = 0; i < 10; i++) {
             queue.offer("a" + i); // 有返回值，返回false代表没有加入成功，true 代表成功，并且此方法不会阻塞
+            //区别于queue.add()方法，add方法在空间不足时跑出异常
         }
 
         System.out.println(queue);
         System.out.println(queue.size());
 
-        System.out.println(queue.poll()); // 取出队头
+        System.out.println(queue.poll()); // 取出队头,若队列已空，则返回null
         System.out.println(queue.size());
 
-        System.out.println(queue.peek()); // 取出队头，但是不删除队头
+        System.out.println(queue.peek()); // 取出队头，但是不删除队头，若队列已空，则返回null
         System.out.println(queue.size());
         
         // 双端队列 Deque 发音： dai ke
