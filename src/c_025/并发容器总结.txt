@@ -25,7 +25,11 @@ Map/Set:
             BlockQueue
                 LinkedBlockingQueue 无界队列
                 ArrayBlockingQueue  有界队列
-                TransferQueue       传输队列（有容量）
+                TransferQueue       传输队列（有容量）：更高并发，使用transfer()方法直接交给消费者，若没有则阻塞
                 SynchronousQueue    特殊的传输队列（容量为0）
             DelayQueue      定时队列
+                add():如果队列已满，就抛出异常
+                take():如果队列已满，则该方法阻塞，等待队列插入新的值
+                offer():如果队列已满，则直接返回false，表明队列已满
+                transfer():直接将值交给消费者去使用，是阻塞的
 

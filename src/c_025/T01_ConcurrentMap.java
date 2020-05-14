@@ -13,7 +13,7 @@ public class T01_ConcurrentMap {
     public static void main(String[] args) {
 
 
-        //Map<String, String> map = new HashMap<>(); 出现并发问题
+        //Map<String, String> map = new HashMap<>(); //出现并发问题
         //Map<String, String> map = new Hashtable<>(); // 511  每次加锁，都锁一个对象
         //Map<String, String> map = Collections.synchronizedMap(new HashMap<>());//542
         Map<String, String> map = new ConcurrentHashMap<>(); // 449，加的是分段所，将容器分为16段，每段都有一个锁 segment; 1.8以后 使用 Node + synchronized+CAS

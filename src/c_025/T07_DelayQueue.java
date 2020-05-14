@@ -7,7 +7,8 @@ import java.util.concurrent.*;
  * 出队有个时间限制, 每个元素有一个等待时间, 可以按照等待时间排序元素
  * DelayQueue元素必须为 Delayed类型的,即必须设置元素的等待时间
  * 
- * 用途，定时执行任务
+ * 用途，定时执行任务，5分钟后提醒用户***
+ * 插入顺序并不是取出顺序？？
  */
 public class T07_DelayQueue {
 
@@ -15,7 +16,7 @@ public class T07_DelayQueue {
         long timestamp = System.currentTimeMillis();
         //System.out.println(timestamp);
         MyTask myTask1 = new MyTask("1",timestamp + 1000); // 1s后执行
-        MyTask myTask2 = new MyTask("2",timestamp + 2000);
+        MyTask myTask2 = new MyTask("2",timestamp + 3000);
         MyTask myTask3 = new MyTask("3",timestamp + 1500);
         MyTask myTask4 = new MyTask("4",timestamp + 2500);
         MyTask myTask5 = new MyTask("5",timestamp + 500);
@@ -63,7 +64,7 @@ public class T07_DelayQueue {
         
         @Override
         public String toString() {
-            return runningTime + "";
+            return name+":"+runningTime + "";
         }
     }
 
