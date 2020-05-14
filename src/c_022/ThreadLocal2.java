@@ -38,5 +38,5 @@ public class ThreadLocal2 {
 ThreadLocal：使用空间换时间  效率更高
 线程同步：使用时间换空间
  
- ThreadLocal可能会导致内存泄漏
+ ThreadLocal在线程池环境中使用时，可能会导致内存泄漏
  */

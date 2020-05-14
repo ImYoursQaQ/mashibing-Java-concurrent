@@ -31,13 +31,15 @@ public class ReentrantLock4 {
 
         Thread t2 = new Thread(() -> {
 
+            boolean locked = false;
             try {
-                lock.lockInterruptibly(); // t2 尝试获取锁
+                lock.lockInterruptibly();// t2 尝试获取锁
+                locked = lock.isLocked();
                 System.out.println("t2 start");
             } catch (InterruptedException e) {
                 System.out.println("t2 等待中被打断");
             } finally {
-                lock.unlock(); // 没有锁定进行unlock就会抛出 IllegalMonitorStateException 
+                if (locked)lock.unlock(); // 没有锁定进行unlock就会抛出 IllegalMonitorStateException
             }
         }, "t2");
         t2.start();
