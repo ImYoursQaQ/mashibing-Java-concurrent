@@ -13,10 +13,12 @@ public class T05_ThreadPool {
     public static void main(String[] args) throws InterruptedException {
 
         ExecutorService service = Executors.newFixedThreadPool(5); // 固定长度的线程池
+        Long start = System.currentTimeMillis();
         for (int i = 0; i < 6; i++) { // 执行六个任务,  在只有五个固定容量的线程池中
             service.execute(() -> {
                 try {
-                    TimeUnit.MILLISECONDS.sleep(500);
+                    TimeUnit.MILLISECONDS.sleep(50);
+                    System.out.println(Thread.currentThread().getName());
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -36,8 +38,13 @@ public class T05_ThreadPool {
         System.out.println(service);  //java.util.concurrent.ThreadPoolExecutor@3b9a45b3[Shutting down, pool size = 5, active threads = 5, queued tasks = 1, completed tasks = 0]
         
 
-        TimeUnit.SECONDS.sleep(5); // 5s 后肯定执行完成了
+        //TimeUnit.SECONDS.sleep(5); // 5s 后肯定执行完成了
+        //如果没有执行完，就循环等待中
+        while (!service.isTerminated()){
 
+        }
+        Long end = System.currentTimeMillis();
+        System.out.println("运行时长："+(end-start)+"ms");
         System.out.println(service.isTerminated()); // true 
         System.out.println(service.isShutdown()); // true
         System.out.println(service); // java.util.concurrent.ThreadPoolExecutor@3b9a45b3[Terminated, pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 6]

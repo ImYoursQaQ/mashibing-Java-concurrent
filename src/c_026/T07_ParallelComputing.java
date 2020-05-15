@@ -7,6 +7,11 @@ import java.util.concurrent.*;
 /**
  * 线程池的作用:并行计算
  * 计算 1-200000 之间的质数
+ * 运行结果：
+ 2303
+ cpu核心数：4
+ 2558
+ 这里怀疑是现代CPU对多次重复任务做了优化
  */
 public class T07_ParallelComputing {
 
@@ -16,7 +21,10 @@ public class T07_ParallelComputing {
         long end = System.currentTimeMillis();
         System.out.println(end - start); // 使用单线程计算的时间
 
-        ExecutorService service = Executors.newFixedThreadPool(4);
+
+        int processors = Runtime.getRuntime().availableProcessors();
+        System.out.println("cpu核心数："+processors);
+        ExecutorService service = Executors.newFixedThreadPool(8);
         ComputeTask t1 = new ComputeTask(1, 8_0000);
         ComputeTask t2 = new ComputeTask(8_0001, 13_0000);
         ComputeTask t3 = new ComputeTask(13_0001, 17_0000);

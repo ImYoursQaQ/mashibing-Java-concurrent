@@ -15,6 +15,15 @@ import java.util.concurrent.TimeUnit;
  * 当A,B线程池尚未处理任务结束,而C已经处理完毕,则C线程会从A或者B中窃取任务执行,这就叫工作窃取
  * 
  * WorkStealingPool 背后是使用 ForkJoinPool实现的
+ *
+ * 4
+ * ForkJoinPool-1-worker-1  1000
+ * ForkJoinPool-1-worker-0  2000
+ * ForkJoinPool-1-worker-2  2000
+ * ForkJoinPool-1-worker-3  2000
+ * ForkJoinPool-1-worker-1  2000
+ *
+ * worker1执行了第一个任务？
  */
 public class T11_WorkStealingPool {
 
@@ -24,16 +33,28 @@ public class T11_WorkStealingPool {
         
         // workStealingPool 会自动启动cpu核数个线程去执行任务
         ExecutorService service = Executors.newWorkStealingPool();
-        service.execute(new R(1000));  // 我的cpu核数为12 启动13个线程,其中第一个是1s执行完毕,其余都是2s执行完毕,
                                                 // 有一个任务会进行等待,当第一个执行完毕后,会再次偷取第十三个任务执行
-        for (int i = 0; i < Runtime.getRuntime().availableProcessors(); i++) {
-            service.execute(new R(2000));
-        }
-        
+//        for (int i = 0; i < Runtime.getRuntime().availableProcessors(); i++) {
+//            if (i == 1){
+//                service.execute(new R(1000));
+//            }
+//            service.execute(new R(2000));
+//        }
+        service.execute(new R(2000));
+//        service.execute(new R(2000));
+//        service.execute(new R(2000));
+//        service.execute(new R(1000));
+//        service.execute(new R(2000));
+
         // 因为work stealing 是deamon线程,即后台线程,精灵线程,守护线程
         // 所以当main方法结束时, 此方法虽然还在后台运行,但是无输出
         // 可以通过对主线程阻塞解决
-        System.in.read();
+        //System.in.read();
+        service.shutdown();
+        //相当于自旋锁
+        while (!service.isTerminated()){
+
+        }
     }
     
     static class R implements Runnable {

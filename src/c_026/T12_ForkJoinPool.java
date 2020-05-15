@@ -1,8 +1,7 @@
 package c_026;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Random;
+import java.util.*;
 import java.util.concurrent.*;
 
 /**
@@ -13,6 +12,7 @@ import java.util.concurrent.*;
  * 将一个任务拆分多个任务执行(可以无限切分),然后将结果合并
  * 
  * 比如大量的并行计算, 如下: 求100_0000个数字之和, 使用多线程
+ * 使用场景：大规模的数据计算
  */
 public class T12_ForkJoinPool {
 
@@ -27,7 +27,11 @@ public class T12_ForkJoinPool {
             nums[i] = random.nextInt(100);
         }
         // 所有数字和, 事先计算:
-        //System.out.println(Arrays.stream(nums).sum()); // 使用单线程stream api 进行求和
+        Long start = System.currentTimeMillis();
+        System.out.println(Arrays.stream(nums).sum()); // 使用单线程stream api 进行求和 100ms
+        Long end = System.currentTimeMillis();
+        System.out.println("使用stream流相加用时："+(end-start));
+
     }
     
     /**
@@ -53,7 +57,7 @@ public class T12_ForkJoinPool {
                 for (int i = start; i < end; i++) {
                     sum += nums[i];
                 }
-                System.out.println("sum = " + sum);
+                System.out.println("from:"+start+"to:"+end+"sum:"+sum);
             } else {
                 int middle = (end - start) / 2;
                 AddTask subTask1 = new AddTask(start, middle);
@@ -95,12 +99,15 @@ public class T12_ForkJoinPool {
     }
 
     // 运行
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args){
         ForkJoinPool fjp = new ForkJoinPool();
         AddTask2 task = new AddTask2(0, nums.length);
+        Long start = System.currentTimeMillis();
         fjp.execute(task);
         System.out.println(task.join());
-        
+        Long end = System.currentTimeMillis();
+        System.out.println("使用ForkJoin相加用时："+(end-start));
+
         //System.in.read();
     }
 
