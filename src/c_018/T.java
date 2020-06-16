@@ -11,18 +11,45 @@ import java.util.concurrent.TimeUnit;
  */
 public class T {
 
-    String s1 = "Hello";
-    String s2 = "Hello";
+    String s1 = "Hello1";
+    String s2 = "Hello2";
     
     void m1() {
         synchronized (s1) {
+            try {
+                TimeUnit.SECONDS.sleep(3);
+                System.out.println(Thread.currentThread().getName()+"持有"+s1);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            synchronized (s2){
+
+            }
             
         }
     }
 
     void m2() {
         synchronized (s2) {
-            
+            System.out.println(Thread.currentThread().getName()+"持有"+s2);
+            try {
+                TimeUnit.SECONDS.sleep(3);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            synchronized (s1){
+
+            }
         }
+    }
+
+    public static void main(String[] args) throws InterruptedException {
+        T t1 = new T();
+        Thread thread1 = new Thread(() -> t1.m1(),"thread1");
+        Thread thread2 = new Thread(() -> t1.m2(),"thread2");
+        thread1.start();
+        thread2.start();
+        thread1.join();
+        thread2.join();
     }
 }
